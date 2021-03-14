@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Recipes</h2>
+
+<p>
+  <a href="{% url 'random_recipe' %}">Take me to a random recipe</a>
+</p>
+
+<p>
+  <a href="{% url 'add_recipe' %}">Add new recipe</a>
+</p>
+
+<ul class="list pl0 flex">
+  <li class="mr2">Order by</li>
+  <li class="mr2"><a class="order-link" href="{% url 'recipe_list' %}?order=title">Title</a></li>
+  <li class="mr2"><a class="order-link" href="{% url 'recipe_list' %}?order=-times_favorited">Times favorited</a></li>
+  <li class="mr2"><a class="order-link" href="{% url 'recipe_list' %}?order=-times_cooked">Times cooked</a></li>
+  <li class="mr2"><a class="order-link" href="{% url 'recipe_list' %}?order=total_time_in_minutes">Total time to make</a></li>
+</ul>
+
+{% include "recipes/_recipe_list.html" %}
+
+{% endblock %}
