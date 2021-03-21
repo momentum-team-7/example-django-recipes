@@ -3,11 +3,6 @@ name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
 
-[dev-packages]
-black = "*"
-yapf = "*"
-prospector = "*"
-
 [packages]
 django = "*"
 django-extensions = "*"
@@ -17,9 +12,17 @@ django-environ = "*"
 django-registration-redux = "*"
 django-ordered-model = "*"
 faker = "*"
+djangorestframework = "*"
+markdown = "*"
+pip = "*"
+django-filter = "*"
 
 [requires]
 python_version = "3.8"
 
 [pipenv]
 allow_prereleases = true
+
+[dev-packages]
+black = "*"
+flake8 = "*"

@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "django_extensions",
     "ordered_model",
+    'rest_framework',
 
     # Project-specific
     "recipes",
@@ -165,3 +166,11 @@ if env("USE_EMAIL"):
     EMAIL_HOST_USER = env("EMAIL_HOST_USER")
     EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
     EMAIL_USE_TLS = env("EMAIL_USE_TLS")
+
+# Django REST Framework
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+    ]
+}
