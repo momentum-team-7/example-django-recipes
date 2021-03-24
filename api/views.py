@@ -9,6 +9,21 @@ class RecipeListView(APIView):
         """
         List all recipes
         """
-        recipes = Recipe.objects.all()
+        # change this to use custom method `for_user()` to restrict query results
+        recipes = Recipe.objects.for_user(request.user)
         serializer = RecipeSerializer(recipes, many=True)
         return Response(serializer.data)
+
+    def post(self, request, format=None):
+        """
+        Create a new recipe
+        """
+        serializer = RecipeSerializer(data=request.data)
+
+        if serializer.is_valid():
+            # save instance
+            serializer.save(user=request.user)
+
+            return Response(serializer.data)
+
+        return Response(serializer.errors)
