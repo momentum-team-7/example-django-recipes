@@ -2,28 +2,25 @@ from api.serializers import RecipeSerializer
 from recipes.models import Recipe
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 
-class RecipeListView(APIView):
-    def get(self, request, format=None):
-        """
-        List all recipes
-        """
-        # change this to use custom method `for_user()` to restrict query results
-        recipes = Recipe.objects.for_user(request.user)
-        serializer = RecipeSerializer(recipes, many=True)
-        return Response(serializer.data)
+class RecipeListCreateView(ListCreateAPIView):
+    # queryset = Recipe.objects.all()  # TODO filter for user
+    serializer_class = RecipeSerializer
 
-    def post(self, request, format=None):
-        """
-        Create a new recipe
-        """
-        serializer = RecipeSerializer(data=request.data)
+    def get_queryset(self):
+        return Recipe.objects.for_user(self.request.user)
 
-        if serializer.is_valid():
-            # save instance
-            serializer.save(user=request.user)
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
-            return Response(serializer.data)
 
-        return Response(serializer.errors)
+class RecipeDetailView(RetrieveUpdateDestroyAPI):
+    serializer_class = RecipeSerializer
+
+    def get_queryset(self):
+        if self.request.method == "GET":
+            return Recipe.objects.for_user(self.request.user)
+
+        return self.request.user.recipes
