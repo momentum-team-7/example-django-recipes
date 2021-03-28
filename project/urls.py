@@ -72,7 +72,11 @@ urlpatterns = [
     path('api/recipes/', api_views.RecipeListCreateView.as_view(),
          name="api-recipe-list"),
     path('api/recipes/<int:pk>/', api_views.RecipeDetailView.as_view(),
-         name="api-recipe-detail")
+         name="api-recipe-detail"),
+    path('api/ingredients/', api_views.IngredientCreateView.as_view(),
+         name="api-ingredient-create"),
+    path('api/ingredients/<int:pk>/',
+         api_views.IngredientDetailView.as_view(), name="api-ingredient-detail")
 ]
 
 if settings.DEBUG:
